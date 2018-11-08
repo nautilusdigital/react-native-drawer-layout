@@ -181,15 +181,17 @@ export default class DrawerLayout extends Component {
                 <Animated.View style={styles.main}>
                     {this.props.children}
                 </Animated.View>
-                <TouchableWithoutFeedback
-                    pointerEvents={pointerEvents}
-                    onPress={this._onOverlayClick}
-                >
-                    <Animated.View
+                {drawerShown ?
+                    <TouchableWithoutFeedback
+                        pointerEvents={pointerEvents}
+                        onPress={this._onOverlayClick}
+                    >
+                        <Animated.View
                         pointerEvents={pointerEvents}
                         style={[styles.overlay, animatedOverlayStyles]}
-                    />
-                </TouchableWithoutFeedback>
+                        />
+                    </TouchableWithoutFeedback>          
+                : null}
                 <Animated.View
                     accessibilityViewIsModal={accessibilityViewIsModal}
                     style={[
@@ -418,7 +420,7 @@ const styles = StyleSheet.create({
     },
     main: {
         flex: 1,
-        zIndex: 0,
+        zIndex: Platform.OS === 'windows' ? 1001 : 0,
     },
     overlay: {
         backgroundColor: '#000',
